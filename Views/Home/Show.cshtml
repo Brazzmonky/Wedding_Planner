@@ -1,0 +1,11 @@
+@model Wedding
+<link rel="stylesheet" href="~/css/wedding/show.css">
+<h1>@Model.WedderOne & @Model.WedderTwo's Wedding <a href="dashboard" class="btn btn-primary">Dashboard</a> <a href="/logout" class="btn btn-danger">Log Out</a></h1>
+<h4>Date: @Model.Date.ToString("MMMM d, yyy - h:mm tt")</h4>
+<h4>Guests:</h4>
+<ul>
+    @foreach (var response in @Model.Responses)
+    {
+        <li>@response.Guest.FirstName @response.Guest.LastName</li>
+    }
+</ul>

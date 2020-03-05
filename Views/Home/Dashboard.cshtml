@@ -1,0 +1,43 @@
+@model List<Wedding>
+<style>
+    table {
+        border: 3px solid black;
+    }
+    .btn-danger {
+        margin-left: 510px;
+    }
+</style>
+<h1>Welcome to the Wedding Planner <a href="/logout" class="btn btn-danger">Log Out</a></h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Wedding</th>
+            <th scope="col">Date</th>
+            <th scope="col">Guests</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var wedding in Model)
+        {
+            <tr>
+                <td><a asp-action="Show" asp-controller="Home" asp-route-weddingId="@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                <td>@wedding.Date</td>
+                <td>@wedding.Responses.Count</td>
+                @if (wedding.UserId == ViewBag.UserId)
+                {
+                    <td><a asp-action="Delete" asp-controller="Home" asp-route-weddingId="@wedding.WeddingId">Delete</a></td>
+                }
+                else if (wedding.Responses.Any(r => r.UserId == ViewBag.UserId))
+                {
+                    <td><a asp-action="UnRSVP" asp-controller="Home" asp-route-weddingId="@wedding.WeddingId">Un-RSVP</a></td>
+                }
+                else
+                {
+                    <td><a asp-action="RSVP" asp-controller="Home" asp-route-weddingId="@wedding.WeddingId">RSVP</a></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/new">New Wedding</a>
